@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="tripod_bluetooth_input" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CmM-iM-IA9">
+                                <rect key="frame" x="147" y="68" width="120" height="60"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="TAq-u2-tRk"/>
+                                    <constraint firstAttribute="width" constant="120" id="yRw-AW-Hjf"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bpg-eE-Xz3">
+                                <rect key="frame" x="147" y="188" width="120" height="60"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="cAC-rg-50X"/>
+                                    <constraint firstAttribute="width" constant="120" id="iQp-AD-Gdb"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Volume Level" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YrC-yj-WoL">
+                                <rect key="frame" x="123" y="549.5" width="168" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Video complete: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AA-m5-es5">
+                                <rect key="frame" x="101" y="663.5" width="212" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrr-eF-a9T">
+                                <rect key="frame" x="52" y="324" width="311" height="118"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="CmM-iM-IA9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="24" id="5Xg-EG-zsd"/>
+                            <constraint firstItem="CmM-iM-IA9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BEl-jO-MbV"/>
+                            <constraint firstItem="Bpg-eE-Xz3" firstAttribute="top" secondItem="CmM-iM-IA9" secondAttribute="bottom" constant="60" id="FmW-LZ-pcG"/>
+                            <constraint firstItem="YrC-yj-WoL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Nh7-zl-JT9"/>
+                            <constraint firstItem="Bpg-eE-Xz3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ssd-O6-xY9"/>
+                            <constraint firstItem="8AA-m5-es5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="buD-DH-Zm3"/>
+                            <constraint firstItem="8AA-m5-es5" firstAttribute="top" secondItem="YrC-yj-WoL" secondAttribute="bottom" constant="80" id="rYE-Hn-R78"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="buttonValue" destination="hrr-eF-a9T" id="EYj-Bb-p4o"/>
+                        <outlet property="playPauseState" destination="CmM-iM-IA9" id="cfe-Nx-eu3"/>
+                        <outlet property="reverseState" destination="Bpg-eE-Xz3" id="4wL-I1-xJ6"/>
+                        <outlet property="videoCompleteText" destination="8AA-m5-es5" id="ZDF-M1-816"/>
+                        <outlet property="volumeLevelText" destination="YrC-yj-WoL" id="eyc-kd-gLu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50.724637681159422" y="20.758928571428569"/>
+        </scene>
+    </scenes>
+</document>
