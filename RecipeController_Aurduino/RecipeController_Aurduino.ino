@@ -21,11 +21,9 @@ CapacitiveSensor   backwardScrubPin = CapacitiveSensor(2, 5); // 10M resistor be
 const int videoScrubPin = A3;   // to scrub the video based on the chain position on the apron
 const int audioScrubPin = A4;   // to control the audio of the iOS device.
 
-int lastVideoScrubState;
-int lastAudioControlState;
+// mapped potentiometer value need to change by +/- this amount to be considered a change
+const int POT_THRESHOLD = 2;
 
-//int thisIsOn = 1;
-//int thisIsOff = 0;
 const int ON = 1;
 const int OFF = 0;
 
@@ -129,18 +127,32 @@ void loop() {
     backwardCharacteristic.writeValue(OFF);
   }
 
-  if (videoScrubState != lastVideoScrubState) {
+  if (videoScrubValueChanged(videoScrubState)) {
       Serial.print("Video Scrub ");
       Serial.println(videoScrubState);
       videoScrubCharacteristic.writeValue(videoScrubState);
-      lastVideoScrubState = videoScrubState;    
   }
 
-  if (audioControlState != lastAudioControlState) {
+  if (audioScrubValueChanged(audioControlState)) {
       Serial.print("Audio Control State ");
       Serial.println(audioControlState);
       audioScrubCharacteristic.writeValue(audioControlState);
-      lastAudioControlState = audioControlState;    
   }
 
+}
+
+// my potentiometer readings jump around a bit this ensures they move a certian amount
+// before sending a new value. Adust POT_THRESHOLD to change sensitivity.
+boolean audioScrubValueChanged(int audioScrub) {
+  return (
+    (audioScrub < (audioScrubCharacteristic.value() - POT_THRESHOLD)) ||
+    (audioScrub > (audioScrubCharacteristic.value() + POT_THRESHOLD))
+   );
+}
+
+boolean videoScrubValueChanged(int videoScrub) {
+  return (
+    (videoScrub < (videoScrubCharacteristic.value() - POT_THRESHOLD)) ||
+    (videoScrub > (videoScrubCharacteristic.value() + POT_THRESHOLD))
+  );
 }
