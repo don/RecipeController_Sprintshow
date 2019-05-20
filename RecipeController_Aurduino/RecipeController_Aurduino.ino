@@ -21,6 +21,9 @@ CapacitiveSensor   backwardScrubPin = CapacitiveSensor(2, 5); // 10M resistor be
 const int videoScrubPin = A3;   // to scrub the video based on the chain position on the apron
 const int audioScrubPin = A4;   // to control the audio of the iOS device.
 
+int lastVideoScrubState;
+int lastAudioControlState;
+
 //int thisIsOn = 1;
 //int thisIsOff = 0;
 const int ON = 1;
@@ -126,59 +129,18 @@ void loop() {
     backwardCharacteristic.writeValue(OFF);
   }
 
-  videoScrubCharacteristic.writeValue(videoScrubState);
-  audioScrubCharacteristic.writeValue(audioControlState);
+  if (videoScrubState != lastVideoScrubState) {
+      Serial.print("Video Scrub ");
+      Serial.println(videoScrubState);
+      videoScrubCharacteristic.writeValue(videoScrubState);
+      lastVideoScrubState = videoScrubState;    
+  }
 
-
-//  Serial.print(total1);
-//  Serial.print(",");
-//  Serial.print(total2);
-//  Serial.print(",");
-//  Serial.print(videoScrubState);
-//  Serial.print(",");
-//  Serial.println(audioControlState);
-
-  //  playPauseCharacteristic.writeValue(total1);
-  //  backwardCharacteristic.writeValue(total2);
-  //  videoScrubCharacteristic.writeValue(videoScrubValue);
-  //  audioScrubCharacteristic.writeValue(audioScrubValue);
-
-//  delay(100);
+  if (audioControlState != lastAudioControlState) {
+      Serial.print("Audio Control State ");
+      Serial.println(audioControlState);
+      audioScrubCharacteristic.writeValue(audioControlState);
+      lastAudioControlState = audioControlState;    
+  }
 
 }
-
-//  // read the current button pin state
-//  char buttonValue = digitalRead(buttonPin);
-//
-////   has the value changed since the last read
-//  boolean buttonChanged = (buttonCharacteristic.value() != buttonValue);
-//
-////  boolean buttonChanged = (buttonCharacteristic.value() == 1);
-//
-//
-//  if (buttonChanged) {
-//    // button state changed, update characteristics
-////    ledCharacteristic.writeValue(buttonValue);
-//    buttonCharacteristic.writeValue(buttonValue);
-//    Serial.println("Button One interaction");
-//  }
-//
-////  char buttonTwoValue = digitalRead(ledPin);
-//
-//  int potValue = analogRead(ledPin);
-//
-//
-//
-//  int mappedButtonTwoValue = map(potValue, 0, 1024, 0, 255);
-//  Serial.println(mappedButtonTwoValue);
-//
-//
-//  boolean buttonTwoChanged = (ledCharacteristic.value() != mappedButtonTwoValue);
-//
-//   if (buttonTwoChanged) {
-//    // button state changed, update characteristics
-//    ledCharacteristic.writeValue(mappedButtonTwoValue);
-////    buttonCharacteristic.writeValue(buttonValue);
-//
-////Serial.println(mappedButtonTwoValue);
-//  }
