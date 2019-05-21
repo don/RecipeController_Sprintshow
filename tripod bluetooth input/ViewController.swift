@@ -9,6 +9,8 @@
 import UIKit
 import CoreBluetooth
 import Foundation
+import AVKit
+import AVFoundation
 
 // UUID to identify the arduino device which in this case is the same as the service
 let APRON_SERVICE_UUID = CBUUID(string: "4cc4513b-1b63-4c93-a419-dddaeae3fdc7")
@@ -18,6 +20,11 @@ let PLAY_PAUSE_BUTTON_UUID = CBUUID(string: "ef9534b9-2c24-4ddc-b9b2-fc690ecf4cb
 let REVERSE_BUTTON_UUID = CBUUID(string: "9400449a-cf66-4652-976a-7e162c785a66")
 let VIDEO_SCRUB_UUID = CBUUID(string: "6635d693-9ad2-408e-ad48-4d8f88810dee")
 let AUDIO_CONTROL_UUID = CBUUID(string:"099af204-5811-4a15-8ffb-4f127ffdfcd7")
+
+// AVPlayer won't directly play YouTube videos, need to use a tool or API to get the video. Or just download something for the show.
+// Wanted https://www.youtube.com/watch?v=eXg3xAdtBNY
+// Using sample video from https://www.quirksmode.org/html5/tests/video.html
+let player = AVPlayer(url: URL(string: "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")!)
 
 class ViewController: UIViewController {
     
@@ -58,6 +65,17 @@ class ViewController: UIViewController {
         buttonValue.text = "Connecting to Arduino"
         
         // TO-DO: Write and alert check here to see if Bluetooth is on or not. If Bluetooth is off through a alert with message.
+        
+    }
+    
+    @IBAction func playVideo(_ sender: Any) {
+        //let player = AVPlayer(url: URL(string: "https://www.youtube.com/watch?v=-Cv-eskTvuo")!)
+        let controller = AVPlayerViewController()
+        controller.player = player
+        present(controller, animated: true) {
+            //player.play()
+        }
+        //vc.player?.play()
     }
 }
 
@@ -215,18 +233,23 @@ extension ViewController: CBPeripheralDelegate{
     
     }
     
-    // TODO: I think this might be better as a toggle...
-    // When playPause is 1, pause if playing or play if paused
-    // Otherwise, just ignore the value?
     func playPause(data: Data) {
         let value = data.int8Value();
         print("playPause", value);
-        if value == 0 {
-            buttonValue.text = "Video Playing"
-            self.playPauseState.backgroundColor = .yellow
-        } else if value == 1 {
-            buttonValue.text = "Video Paused"
-            self.playPauseState.backgroundColor = .blue
+        
+        // This toggles the embedded player between play and pause
+        if value == 1 {
+            if player.rate != 0 && player.error == nil {
+                // player was playing, pause it
+                player.pause();
+                buttonValue.text = "Video Paused"
+                self.playPauseState.backgroundColor = .blue
+            } else {
+                // player was paused or stopped, play
+                player.play();
+                buttonValue.text = "Video Playing"
+                self.playPauseState.backgroundColor = .yellow
+            }
         }
     }
     
@@ -238,18 +261,33 @@ extension ViewController: CBPeripheralDelegate{
         } else {
             self.reverseState.backgroundColor = .green
         }
+
+        print("rewinding 15 seconds")
+        let currentTime = player.currentTime()
+        let seconds = CMTimeMakeWithSeconds(15, preferredTimescale: currentTime.timescale)
+        let time = CMTimeSubtract(player.currentTime(), seconds)
+        player.seek(to: time)
     }
     
     func audioControl(data: Data) {
-        let value = data.int8Value();
-        print("audio", value);
-        volumeLevelText.text = "Volume level: " + "\(value)"
+        let volume = data.int8Value()
+        print("audio", volume);
+        volumeLevelText.text = "Volume level: " + "\(volume)"
+        player.volume = Float(volume)/100; // volume is between 0 and 1
     }
     
     func videoScrub(data: Data) {
-        let value = data.int8Value();
-        print("Video", value);
-        videoCompleteText.text = "Video scrub position: " + "\(value)"
+        let percent = data.int8Value();
+        print("Video", percent);
+        videoCompleteText.text = "Video scrub position: " + "\(percent)"
+
+        // TODO clean up unwrapping
+        let duration = player.currentItem?.asset.duration
+        if let durationSeconds = duration?.seconds {
+            let seconds = durationSeconds * Double(percent)/100.0
+            let time = CMTimeMakeWithSeconds(seconds, preferredTimescale: player.currentTime().timescale)
+            player.seek(to: time)
+        }
     }
 
 }

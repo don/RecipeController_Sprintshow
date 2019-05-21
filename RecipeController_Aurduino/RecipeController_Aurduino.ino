@@ -50,7 +50,7 @@ BLEDescriptor audioScrubDescriptor("2901", "Volume");
 void setup() {
 
   Serial.begin(9600);
-  while (!Serial);
+  // while (!Serial);
 
   playPausePin.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
   backwardScrubPin.set_CS_AutocaL_Millis(0xFFFFFFFF);     // turn off autocalibrate on channel 1 - just as an example
