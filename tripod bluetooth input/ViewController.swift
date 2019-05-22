@@ -24,7 +24,11 @@ let AUDIO_CONTROL_UUID = CBUUID(string:"099af204-5811-4a15-8ffb-4f127ffdfcd7")
 // AVPlayer won't directly play YouTube videos, need to use a tool or API to get the video. Or just download something for the show.
 // Wanted https://www.youtube.com/watch?v=eXg3xAdtBNY
 // Using sample video from https://www.quirksmode.org/html5/tests/video.html
-let player = AVPlayer(url: URL(string: "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")!)
+//let player = AVPlayer(url: URL(string: "https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4")!)
+// original video got removed, linking to another copy
+let player = AVPlayer(url: URL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!)
+
+
 
 class ViewController: UIViewController {
     
